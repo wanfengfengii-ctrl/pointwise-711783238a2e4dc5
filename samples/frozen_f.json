@@ -1,0 +1,15 @@
+{
+  "batch_id": "F",
+  "request_id": "night-F",
+  "start": 0,
+  "stop": 4,
+  "quality": "可用",
+  "rows": [
+    {"position": 40, "origin": "青沅/北闸#A", "liters": 7, "quality": "可用"},
+    {"position": 12, "origin": "青沅/北闸#B", "liters": 9, "quality": "待核"},
+    {"position": 31, "origin": "青沅/南闸#C", "liters": 11, "quality": "可用"},
+    {"position": 88, "origin": "青沅/东闸#D", "liters": 7, "quality": "可用"}
+  ],
+  "primary_groups": [[0, 1], [2, 3]],
+  "standby_groups": [[0], [1, 2], [3]]
+}

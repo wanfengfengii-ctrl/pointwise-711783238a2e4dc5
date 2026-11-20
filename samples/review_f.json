@@ -1,0 +1,8 @@
+{
+  "details": [
+    {"position": 0, "original_position": 40, "origin": "青沅/北闸#A", "liters": 7, "quality": "可用"},
+    {"position": 2, "original_position": 31, "origin": "青沅/南闸#C", "liters": 11, "quality": "可用"},
+    {"position": 3, "original_position": 88, "origin": "青沅/东闸#D", "liters": 7, "quality": "可用"}
+  ],
+  "total_liters": 25
+}
