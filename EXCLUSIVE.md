@@ -21,3 +21,9 @@
 - 在目标办理签发和撤回时分别阻断一次提交，确认失败前的实收和源端占用保留，同参重试只有一个终局。对 [3,4) 用“待核”筛选，实收完整后签出空明细和 0 L，随后申请同一位置仍须拒绝。
 
 交付时沿用 `.pointwise-runtime.json`。`version` 为 `1`，`kind` 为 `cli`，`setup` 为 argv 列表，`verify`、`demo` 各为一条 argv。`verify` 运行原回归及上述联合核验，任一核验失败时退出非零。`demo` 展示两种交班的实际成果与归还结果。原演示仍可用 `python3 -B -m lake_cli demo` 运行。
+
+## 实现入口说明
+
+- 原派工绑定 `scan.requests.ExclusiveDispatch` 由 `reserve_exclusive` 返回，`request_id` 与派工号一致，直接供 `scan.tasks.assign_task`、`scan.segments.scan` 和 `receiving.intake.receive` 使用。`get_exclusive_dispatch` 可按派工号复查原绑定。
+- 最终授权由资料库侧 `receiving.requests.authorize_exclusive(dispatch)` 生成，交给 `accept_exclusive`。最终授权前交换的其它交接消息使用 `receiving.requests.notice_exclusive(inbox, dispatch, *, sender_id)` 登记，该入口同样只接受资料库来件与具名目标库，并可拒绝错库来件。
+- 未签凭据是 `scan.requests.UnsignedReceipt`，可按原绑定比对，`receipt_id` 稳定可复领；`scan.requests.release_exclusive` 返回受理凭据，重复投递同凭据只复领原结果。

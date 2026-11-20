@@ -31,3 +31,7 @@ python3 -B -m lake_cli demo
 8. `audit.checks.audit(inbox, result_id, details, reported_total)` 用固定正文核对所交的 `FrozenRow` 序列，复算净量并保存引用原首执的成功记录。行顺序、原位置、数值、缺测、标志、逐位置出处或合计有误时抛 `AuditMismatch`，其 `differences` 提供字段和适用位置。`audit.ledger.get_audit_record` 可按核账号查回成功记录。
 
 演示批 F 的主布局为 `[0,2)`、`[2,4)`，备用布局为 `[0,1)`、`[1,3)`、`[3,4)`。夜班先收到主组 0，再收到备用组 1。此时仍缺逻辑位置 3。完整成果列出位置 0、2、3 及原出处，合计 `7 + 11 + 7 = 25 L`。回归另覆盖错批、空命中、真实提交回滚、重复初始化及断源后复领。
+
+## 独占抽查交班
+
+独占派工与交班见 `EXCLUSIVE.md`。`scan.requests.reserve_exclusive` 按冻结号、派工号、具名目标库、质控标志和半开范围登记原派工绑定并占位全范围；`receiving.requests.bind_destination`、`accept_exclusive`、`withdraw_exclusive` 在目标库办理验收与整单未签撤回；`scan.requests.release_exclusive` 凭目标库未签凭据归还。联合核验运行 `python3 -B exclusive_case.py demo`，完整回归含 `python3 -B check_project.py`。

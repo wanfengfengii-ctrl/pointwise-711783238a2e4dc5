@@ -44,7 +44,6 @@ def initialize_receiving(db):
     initialize_publications(db)
     initialize_audit_ledger(db)
 
-
 def initialize_directory(directory):
     directory.mkdir(parents=True, exist_ok=True)
     for name, initialize in (('source', initialize_source), ('primary', initialize_replica_store),
